@@ -23,7 +23,7 @@ shinyServer(function(input, output, session) {
    
     filteredcountry <- reactive({
 
-        statadata %>% select(CountryofLiving) %>% dplyr::filter(CountryofLiving == input$country)  %>% add_tally() %>% select(n) %>% distinct(n)
+        statadata %>% select(CountryofLiving) %>% dplyr::filter(CountryofLiving == input$country)  %>% add_tally() %>% select(n) %>% distinct(n) 
     })
     
     
@@ -92,6 +92,18 @@ shinyServer(function(input, output, session) {
     })
     
     
+    populationofcountry2018 <- reactive({
+      data %>% select(countriesAndTerritories,popData2018) %>% dplyr::filter(countriesAndTerritories == input$country) %>% select(popData2018) %>% distinct(popData2018) %>% prettyNum(big.mark = " ")
+    })
+    
+    
+    
+    output$populationcountry2018 <- renderValueBox({
+      valueBox(populationofcountry2018(),"County population (census 2018)", icon = icon("users"), color="blue")
+      
+    })
+    
+    
 
 #    output$dataecdc <- renderDataTable({
 #        DT::datatable(data)
@@ -115,8 +127,8 @@ shinyServer(function(input, output, session) {
       df4 <- df3 %>% select(var,q)
       
       ggplot(data=df4, aes(stringr::str_wrap(q, 30), var)) +
-      geom_bar(stat="identity", fill="steelblue") + xlab("Questions") + ylab("Responses (mean)") +coord_flip() + theme_minimal() + theme(axis.text.y = element_text(size = 12), axis.text.x = element_text(size = 12) , plot.title =element_text(size=14, face='bold')) + ggtitle("To what extent do the following statements describe your behavior \nfor the past week?") 
-
+      geom_bar(stat="identity", fill="steelblue") + xlab("Questions") + ylab("Responses (mean)") +coord_flip() + theme_minimal() + theme(axis.text.y = element_text(size = 12), axis.text.x = element_text(size = 12) , plot.title =element_text(size=18, face='bold')) + ggtitle("To what extent do the following statements describe \nyour behavior for the past week?") 
+      
     })
     
   
@@ -129,7 +141,7 @@ shinyServer(function(input, output, session) {
       res <- c("No","Yes")
       df1 <- data.frame(df,res)
       ggplot(data=df1, aes(per,res)) +
-        geom_bar(stat="identity", fill="steelblue") + xlab("Percentage") + ylab("Responses") + xlim(0, 100) + theme_minimal() + theme(axis.text.y = element_text(size = 20), axis.text.x = element_text(size = 12),  plot.title =element_text(size=14, face='bold')) + ggtitle("Do you need to leave your home in the next 5 days?") 
+        geom_bar(stat="identity", fill="steelblue") + xlab("Percentage") + ylab("Responses") + xlim(0, 100) + theme_minimal() + theme(axis.text.y = element_text(size = 20), axis.text.x = element_text(size = 12),  plot.title =element_text(size=18, face='bold')) + ggtitle("Do you need to leave your home in the next 5 days?") 
       
     })
     
@@ -150,7 +162,7 @@ shinyServer(function(input, output, session) {
       df1$res <- factor(df1$res, levels = c("The reaction is much too extreme","The reaction is somewhat too extreme","The reaction is appropriate", "The reaction is somewhat insufficient","The reaction is not at all sufficient"))
       
       ggplot(data=df1, aes(per,res)) +
-      geom_bar(stat="identity", fill="steelblue") + xlab("Percentage") + xlim(0, 100) + ylab("Responses")  + theme_minimal() + theme(axis.text.x = element_text(size = 12),axis.text.y = element_text(size = 12),  plot.title= element_text(size=14, face='bold')) + ggtitle("Do you think the reaction of your country\'s government to the current \ncoronavirus outbreak is appropriate, too extreme, or not sufficient?") 
+      geom_bar(stat="identity", fill="steelblue") + xlab("Percentage") + xlim(0, 100) + ylab("Responses")  + theme_minimal() + theme(axis.text.x = element_text(size = 12),axis.text.y = element_text(size = 12),  plot.title= element_text(size=18, face='bold')) + ggtitle("Do you think the reaction of your country\'s government \nto the current coronavirus outbreak is appropriate, \ntoo extreme, or not sufficient?")  
       
     })
     
@@ -168,9 +180,9 @@ shinyServer(function(input, output, session) {
       df1[is.na(df1)] <- 0
      
       df1$res <- factor(df1$res, levels = c("Does not apply at all","Somewhat does not apply","Neither applies nor does not apply", "Somewhat applies","Strongly applies"))
-    #  stringr::str_wrap(res, 30)
+    
       ggplot(data=df1, aes(per,res)) +
-        geom_bar(stat="identity", fill="steelblue") + xlab("Percentage") + xlim(0, 100) + ylab("Responses")  + theme_minimal() + theme(axis.text.y = element_text(size = 12), axis.text.x = element_text(size = 12),  plot.title =element_text(size=14, face='bold')) + ggtitle("I am nervous when I think about current circumstances.")
+        geom_bar(stat="identity", fill="steelblue") + xlab("Percentage") + xlim(0, 100) + ylab("Responses")  + theme_minimal() + theme(axis.text.y = element_text(size = 12), axis.text.x = element_text(size = 12),  plot.title =element_text(size=18, face='bold')) + ggtitle("I am nervous when I think about current circumstances.")
       
     })
     
@@ -184,7 +196,7 @@ shinyServer(function(input, output, session) {
       df4 <- df3 %>% select(var,q)
       
       ggplot(data=df4, aes(stringr::str_wrap(q, 30), var)) +
-        geom_bar(stat="identity", fill="steelblue") + xlab("Questions") + ylab("Responses (mean)") +coord_flip() + theme_minimal() + theme(axis.text.y = element_text(size = 12), axis.text.x = element_text(size = 12) , plot.title =element_text(size=14, face='bold')) + ggtitle("To what extent do the following statements describe your behavior \nfor the past week?") 
+        geom_bar(stat="identity", fill="steelblue") + xlab("Questions") + ylab("Responses (mean)") +coord_flip() + theme_minimal() + theme(axis.text.y = element_text(size = 12), axis.text.x = element_text(size = 12) , plot.title =element_text(size=18, face='bold')) + ggtitle("To what extent do the following statements describe \nyour behavior for the past week?") 
       
     })
     
@@ -197,7 +209,7 @@ shinyServer(function(input, output, session) {
       res <- c("No","Yes")
       df1 <- data.frame(df,res)
       ggplot(data=df1, aes(per,res)) +
-        geom_bar(stat="identity", fill="steelblue") + xlab("Percentage") + ylab("Responses") + xlim(0, 100) + theme_minimal() + theme(axis.text.y = element_text(size = 20), axis.text.x = element_text(size = 12),  plot.title =element_text(size=14, face='bold')) + ggtitle("Do you need to leave your home in the next 5 days?") 
+        geom_bar(stat="identity", fill="steelblue") + xlab("Percentage") + ylab("Responses") + xlim(0, 100) + theme_minimal() + theme(axis.text.y = element_text(size = 20), axis.text.x = element_text(size = 12),  plot.title =element_text(size=18, face='bold')) + ggtitle("Do you need to leave your home in the next 5 days?") 
       
     })
     
@@ -216,7 +228,7 @@ shinyServer(function(input, output, session) {
       df1$res <- factor(df1$res, levels = c("The reaction is much too extreme","The reaction is somewhat too extreme","The reaction is appropriate", "The reaction is somewhat insufficient","The reaction is not at all sufficient"))
       
       ggplot(data=df1, aes(per,res)) +
-        geom_bar(stat="identity", fill="steelblue") + xlab("Percentage") + xlim(0, 100) + ylab("Responses")  + theme_minimal() + theme(axis.text.x = element_text(size = 12),axis.text.y = element_text(size = 12),  plot.title= element_text(size=14, face='bold')) + ggtitle("Do you think the reaction of your country\'s government to the current \ncoronavirus outbreak is appropriate, too extreme, or not sufficient?") 
+        geom_bar(stat="identity", fill="steelblue") + xlab("Percentage") + xlim(0, 100) + ylab("Responses")  + theme_minimal() + theme(axis.text.x = element_text(size = 12),axis.text.y = element_text(size = 12),  plot.title= element_text(size=18, face='bold')) + ggtitle("Do you think the reaction of your country\'s government \nto the current coronavirus outbreak is appropriate, \ntoo extreme, or not sufficient?") 
       
     })
     
@@ -237,7 +249,7 @@ shinyServer(function(input, output, session) {
       df1$res <- factor(df1$res, levels = c("Does not apply at all","Somewhat does not apply","Neither applies nor does not apply", "Somewhat applies","Strongly applies"))
       #  stringr::str_wrap(res, 30)
       ggplot(data=df1, aes(per,res)) +
-        geom_bar(stat="identity", fill="steelblue") + xlab("Percentage") + xlim(0, 100) + ylab("Responses")  + theme_minimal() + theme(axis.text.y = element_text(size = 12), axis.text.x = element_text(size = 12),  plot.title =element_text(size=14, face='bold')) + ggtitle("I am nervous when I think about current circumstances.")
+        geom_bar(stat="identity", fill="steelblue") + xlab("Percentage") + xlim(0, 100) + ylab("Responses")  + theme_minimal() + theme(axis.text.y = element_text(size = 12), axis.text.x = element_text(size = 12),  plot.title =element_text(size=18, face='bold')) + ggtitle("I am nervous when I think about current circumstances.")
       
     })
     
@@ -255,8 +267,8 @@ shinyServer(function(input, output, session) {
       
       
       
-      pl <- ggplot(datacountrycov_reshaped, aes(x=dateRep,y=value, col=variable))   +  geom_line(size=1.2)  + scale_x_datetime(date_breaks = "2 weeks", labels = date_format("%d.%m.%Y")) + theme_few() + xlab("Date") +ylab("Number") + labs(colour = NULL,caption = "Data source: European Centre for Disease Prevention and Control", subtitle = "Yellow block represents the period when the survey was conducted.") +
-        scale_color_manual(labels = c("Cases", "Deaths"), values = c("#1C1C1C", "#BB000E")) + theme(axis.text.x = element_text(size = 12), axis.text.y = element_text(size = 12)) + scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
+      pl <- ggplot(datacountrycov_reshaped, aes(x=dateRep,y=value, col=variable))   +  geom_line(size=1.2)  + scale_x_datetime(date_breaks = "2 weeks", labels = date_format("%d.%m.%Y")) + theme_few() + xlab("Date") +ylab("Number") + labs(colour = NULL, subtitle = "Yellow block represents the period when the survey was conducted.") +
+        scale_color_manual(labels = c("Cases", "Deaths"), values = c("#1C1C1C", "#BB000E")) + theme(axis.text.x = element_text(size = 12), axis.text.y = element_text(size = 12)) + scale_y_continuous(labels = function(x) format(x, big.mark = " ", scientific = FALSE))
       pl  + annotate("rect", xmin = as.POSIXct(as.Date(surveyfirstdate$StartDate)), xmax = as.POSIXct(as.Date(surveylastdate$StartDate)), ymin = 0, ymax = max(datacountrycov$casecum), alpha = .2, fill= "orange")
       
       
@@ -274,8 +286,8 @@ shinyServer(function(input, output, session) {
       
       
       
-      pl <- ggplot(datacontinentcov_reshaped, aes(x=dateRep,y=value, col=variable))   +  geom_line(size=1.2)  + scale_x_datetime(date_breaks = "2 weeks", labels = date_format("%d.%m.%Y")) + theme_few() + xlab("Date") +ylab("Number") + labs(colour = NULL,caption = "Data source: European Centre for Disease Prevention and Control", subtitle = "Yellow block represents the period when the survey was conducted.") +
-        scale_color_manual(labels = c("Cases", "Deaths"), values = c("#1C1C1C", "#BB000E")) + theme(axis.text.x = element_text(size = 12), axis.text.y = element_text(size = 12)) + scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
+      pl <- ggplot(datacontinentcov_reshaped, aes(x=dateRep,y=value, col=variable))   +  geom_line(size=1.2)  + scale_x_datetime(date_breaks = "2 weeks", labels = date_format("%d.%m.%Y")) + theme_few() + xlab("Date") +ylab("Number") + labs(colour = NULL, subtitle = "Yellow block represents the period when the survey was conducted.") +
+        scale_color_manual(labels = c("Cases", "Deaths"), values = c("#1C1C1C", "#BB000E")) + theme(axis.text.x = element_text(size = 12), axis.text.y = element_text(size = 12)) + scale_y_continuous(labels = function(x) format(x, big.mark = " ", scientific = FALSE))
       pl  + annotate("rect", xmin = as.POSIXct(as.Date(surveyfirstdate$StartDate)), xmax = as.POSIXct(as.Date(surveylastdate$StartDate)), ymin = 0, ymax = max(datacontinentcov$casecum), alpha = .2, fill= "orange")
       
       
@@ -317,7 +329,7 @@ shinyServer(function(input, output, session) {
     
     
     output$nocases <- renderValueBox({
-      totalNoCases<- data %>% select(countriesAndTerritories,cases) %>% dplyr::filter(countriesAndTerritories==input$country) %>% dplyr::summarise_at("cases",sum)
+      totalNoCases<- data %>% select(countriesAndTerritories,cases) %>% dplyr::filter(countriesAndTerritories==input$country) %>% dplyr::summarise_at("cases",sum) %>% prettyNum(big.mark = " ")
       valueBox(totalNoCases, "Number of confirmed cases", icon = icon("list", lib = "glyphicon"),
                color = "blue")
       
@@ -338,7 +350,7 @@ shinyServer(function(input, output, session) {
     
     
     output$nocasescon <- renderValueBox({
-      totalNoCases<- data %>% select(continentExp,cases) %>% dplyr::filter(continentExp==input$continent) %>% dplyr::summarise_at("cases",sum)
+      totalNoCases<- data %>% select(continentExp,cases) %>% dplyr::filter(continentExp==input$continent) %>% dplyr::summarise_at("cases",sum) %>% prettyNum(big.mark = " ")
      
       valueBox(totalNoCases, "Number of confirmed cases", icon = icon("list", lib = "glyphicon"),
                color = "navy")
@@ -346,13 +358,23 @@ shinyServer(function(input, output, session) {
     })
     
     
+    populationofcontinent2018 <- reactive({
+      data %>% select(continentExp,popData2018) %>% dplyr::filter(continentExp == input$continent) %>% dplyr::summarise_at("popData2018",sum, na.rm = TRUE) %>% select(popData2018) %>% prettyNum(big.mark = " ")
+    })
+    
+    
+    
+    output$populationcontinent2018 <- renderValueBox({
+      valueBox(populationofcontinent2018(),"Continent population (census 2018)", icon = icon("users"), color="navy")
+      
+    })
     
     
     output$nocasesPerPopcon <- renderValueBox({
       totalNoCases<- data %>% select(continentExp,cases) %>% dplyr::filter(continentExp==input$continent) %>% dplyr::summarise_at("cases",sum)
       ContinentPop <- data %>% select(continentExp, countriesAndTerritories, popData2018) %>% dplyr::filter(continentExp=="Europe") %>% distinct() %>% group_by(continentExp) %>% summarise(popData2018 = sum(popData2018))
       
-      filteredCasesPop <- round((totalNoCases/ContinentPop$popData2018)*100000,0)
+      filteredCasesPop <- round((totalNoCases/ContinentPop$popData2018)*100000,0) 
       
       valueBox(if(filteredCasesPop < 1){"< 1"} else {filteredCasesPop}, "Number of confirmed cases per 100.000 inhabitants (census 2018)", icon = icon("list", lib = "glyphicon"),
                color = "navy")
@@ -368,8 +390,33 @@ shinyServer(function(input, output, session) {
       
       valueBox(if(filteredDeathsCases < 1) {"< 1 %"} else {paste0(filteredDeathsCases," %")}, "Percentage of deaths per total number of confirmed cases", icon = icon("list", lib = "glyphicon"),
                color = "black")
-      
+       })
+    
+    
+    output$treemapcountry <- renderPlot({
+      treemap(bycountry,
+              index="CountryofLiving",
+              vSize="n",
+              vColor = "n",
+              type="index",
+              palette="Blues",
+              n=5,
+              title = "Number of participants"
+      )
     })
+    
+    output$treemapcontinent <- renderPlot({
+      treemap(bycontinent,
+              index="continentExp",
+              vSize="n",
+              vColor = "n",
+              type="index",
+              palette="Blues", 
+              n=3,
+              title = "Number of participants"
+      )
+    })
+    
     
 
 })
