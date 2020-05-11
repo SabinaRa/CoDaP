@@ -49,5 +49,3 @@ bycontinent_statadata <- statadata %>% group_by(continent) %>%  tally()  %>% dpl
 
 bycontinent <- bycontinent_data %>% inner_join(bycontinent_statadata, by = c("continentExp" = "continent")) 
 
-
-

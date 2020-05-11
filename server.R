@@ -99,7 +99,7 @@ shinyServer(function(input, output, session) {
     
     
     output$populationcountry2018 <- renderValueBox({
-      valueBox(populationofcountry2018(),"County population (census 2018)", icon = icon("users"), color="blue")
+      valueBox(populationofcountry2018(),"Country population (2018)", icon = icon("users"), color="blue")
       
     })
     
@@ -322,7 +322,7 @@ shinyServer(function(input, output, session) {
       CountryPop <- data %>% select(countriesAndTerritories,popData2018) %>% dplyr::filter(countriesAndTerritories==input$country)
       filteredCasesPop <- round((totalNoCases/CountryPop$popData2018)*100000,0)
       
-      valueBox(if(filteredCasesPop < 1){"< 1"} else {filteredCasesPop}, "Number of confirmed cases per 100.000 inhabitants (census 2018)", icon = icon("list", lib = "glyphicon"),
+      valueBox(if(filteredCasesPop < 1){"< 1"} else {filteredCasesPop}, "Number of confirmed cases per 100.000 inhabitants (2018)", icon = icon("list", lib = "glyphicon"),
                color = "blue")
       
     })
@@ -365,18 +365,18 @@ shinyServer(function(input, output, session) {
     
     
     output$populationcontinent2018 <- renderValueBox({
-      valueBox(populationofcontinent2018(),"Continent population (census 2018)", icon = icon("users"), color="navy")
+      valueBox(populationofcontinent2018(),"Continent population (2018)", icon = icon("users"), color="navy")
       
     })
     
     
     output$nocasesPerPopcon <- renderValueBox({
       totalNoCases<- data %>% select(continentExp,cases) %>% dplyr::filter(continentExp==input$continent) %>% dplyr::summarise_at("cases",sum)
-      ContinentPop <- data %>% select(continentExp, countriesAndTerritories, popData2018) %>% dplyr::filter(continentExp=="Europe") %>% distinct() %>% group_by(continentExp) %>% summarise(popData2018 = sum(popData2018))
+      ContinentPop <- data %>% select(continentExp,popData2018) %>% dplyr::filter(continentExp == input$continent) %>% dplyr::summarise_at("popData2018",sum, na.rm = TRUE) 
       
-      filteredCasesPop <- round((totalNoCases/ContinentPop$popData2018)*100000,0) 
+      filteredCasesPop <- round((totalNoCases/ContinentPop$popData2018)*1000000,1) 
       
-      valueBox(if(filteredCasesPop < 1){"< 1"} else {filteredCasesPop}, "Number of confirmed cases per 100.000 inhabitants (census 2018)", icon = icon("list", lib = "glyphicon"),
+      valueBox(if(filteredCasesPop < 1){"< 1"} else {filteredCasesPop}, "Number of confirmed cases per 1.000.000 inhabitants (2018)", icon = icon("list", lib = "glyphicon"),
                color = "navy")
       
     })
@@ -384,7 +384,7 @@ shinyServer(function(input, output, session) {
     
     output$nodeathsPercasescon <- renderValueBox({
       totalNoDeaths <- data %>% select(continentExp,deaths) %>% dplyr::filter(continentExp==input$continent) %>% dplyr::summarise_at("deaths",sum)
-      totalNoCases <- data %>% select(continentExp,cases) %>% dplyr::filter(continentExp==input$continent) %>% dplyr::summarise_at("cases",sum)
+      totalNoCases <- data %>% select(continentExp,cases) %>% dplyr::filter(continentExp==input$continent) %>% dplyr::summarise_at("cases", sum)
       
       filteredDeathsCases <- round(((totalNoDeaths/totalNoCases)*100),2)
       
