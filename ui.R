@@ -34,6 +34,7 @@ tabItems(
   tabItem(tabName = "mycountry",
   
     selectInput("country", "Select country:", choices=bycountry$CountryofLiving, selected="Italy"),
+    helpText("Note: Only countries with more than 50 responses included."),
         
       
     fluidRow(
@@ -113,11 +114,11 @@ tabItem(tabName = "about",
                                        tags$a(href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide", "https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"),br(),br(),
                                        
                                        "Fetzer, T., Witte, M., Hensel, L., Jachimowicz, J.M., Haushofer, J., Ivchenko, A., 
-              Caria, C., Reutskaja, E., Roth, C., Fiorin, F., Gomez, M., Kraft-Todd, G., Goetz, F., & Yoeli, E.. 
-              Global Behaviors and Perceptions in the COVID-19 Pandemic. https://doi.org/10.31234/osf.io/3kfmh
-          International Survey on Coronavirus, GlobalBehaviorsPerceptions_Dataset_Apr22_2020,", tags$a(href="https://osf.io/k5b6u/", "https://osf.io/k5b6u/"),",",tags$a(href="https://covid19-survey.org/results.html", "https://covid19-survey.org/results.html") 
+                                        Caria, C., Reutskaja, E., Roth, C., Fiorin, F., Gomez, M., Kraft-Todd, G., Goetz, F., & Yoeli, E.. 
+                                        Global Behaviors and Perceptions in the COVID-19 Pandemic. https://doi.org/10.31234/osf.io/3kfmh
+                                        International Survey on Coronavirus, GlobalBehaviorsPerceptions_Dataset_Apr22_2020,", tags$a(href="https://osf.io/k5b6u/", "https://osf.io/k5b6u/"),",",tags$a(href="https://covid19-survey.org/results.html", "https://covid19-survey.org/results.html") 
                                      )),
-        boxPlus(width=12, title="Data update", closable= FALSE, status="warning", solidHeader = FALSE, collapsible = TRUE, p("ECDC Covid-19 Data, last update: 10.5.2020",br(),"International Survey on Coronavirus, last update: 22.4.2020",br(), "Dashboard v1.1, last update 10.5.2020")),
+        boxPlus(width=12, title="Data update", closable= FALSE, status="warning", solidHeader = FALSE, collapsible = TRUE, p("ECDC Covid-19 Data, last update: 11.5.2020",br(),"International Survey on Coronavirus, last update: 22.4.2020",br(), "Dashboard v1.1, last update 11.5.2020")),
         boxPlus(width=12, title="Contact", closable= FALSE, status="warning", solidHeader = FALSE, collapsible = TRUE, p("Dashboard autor: Sabina Rako, E-mail: sabina.rako1[at]gmail.com", br(), "Dashboard R code available at", tags$a(href="https://github.com/SabinaRa/CoDaP", "GitHub page")))
         
         )

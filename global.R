@@ -21,7 +21,7 @@ library(treemap)
 
 options(digits.secs=2) 
 
-data <- read_excel("./data/COVID-19-geographic-disbtribution-worldwide-2020-05-10.xlsx")
+data <- read_excel("./data/COVID-19-geographic-disbtribution-worldwide-2020-05-11.xlsx")
 
 #data adjustment, preparation to implement join
 data$countriesAndTerritories <- stringr::str_replace_all(data$countriesAndTerritories, "[_]", " ")
@@ -38,14 +38,19 @@ statadata <- statadata %>% mutate(CountryofLiving =replace(CountryofLiving, Coun
 
 #preparation to implement join
 bycountry_data <- data %>% distinct(countriesAndTerritories,geoId)
-bycountry_statadata <- statadata %>% group_by(CountryofLiving,iso2c) %>%  tally()  %>% dplyr::filter(n >=20)
+bycountry_statadata <- statadata %>% group_by(CountryofLiving,iso2c) %>%  tally()  %>% dplyr::filter(n >50)
 
 # join by country code
 bycountry <- bycountry_data %>% inner_join(bycountry_statadata, by = c("geoId" = "iso2c"))  
 
 
 bycontinent_data <- data %>% distinct(continentExp)
-bycontinent_statadata <- statadata %>% group_by(continent) %>%  tally()  %>% dplyr::filter(n >=20)
+bycontinent_statadata <- statadata %>% group_by(continent) %>%  tally() 
 
 bycontinent <- bycontinent_data %>% inner_join(bycontinent_statadata, by = c("continentExp" = "continent")) 
+
+
+
+
+
 
