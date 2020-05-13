@@ -10,7 +10,7 @@
 # Fetzer, T., Witte, M., Hensel, L., Jachimowicz, J.M., Haushofer, J., Ivchenko, A., 
 # Caria, C., Reutskaja, E., Roth, C., Fiorin, F., Gomez, M., Kraft-Todd, G., Goetz, F., & Yoeli, E.. 
 # Global Behaviors and Perceptions in the COVID-19 Pandemic. https://doi.org/10.31234/osf.io/3kfmh
-# International Survey on Coronavirus, GlobalBehaviorsPerceptions_Dataset_Apr22_2020, https://osf.io/k5b6u/, https://covid19-survey.org/results.html 
+# International Survey on Coronavirus, GlobalBehaviorsPerceptions_Dataset_Apr22_2020, https://osf.io/g7fn9/, https://covid19-survey.org/results.html 
 #
 # Dashboard created by: Sabina Rako, sabina.rako1[at]gmail.com
 #
@@ -54,13 +54,14 @@ tabItems(
         ),
     
      box(width=6, leafletOutput("mapcorona"), status = "primary", title="Map"),
-     valueBoxOutput(width=6,"populationcountry2018")
+     valueBoxOutput(width=6,"populationcountry2018"),
+     valueBoxOutput(width=6,"datefirstcoronacase")
         ),
     
      fluidRow(
       column(width=12,
              
-             box(width=10, title="Cumulative COVID data",status = "primary", plotOutput("covidcasescum")),
+             box(width=10, title="Cumulative COVID-19 data",status = "primary", plotOutput("covidcasescum")),
              valueBoxOutput(width=2,"nocases"),
              valueBoxOutput(width=2,"nocasesPerPop"),
              valueBoxOutput(width=2,"nodeathsPercases")
@@ -91,13 +92,14 @@ fluidRow(
   ),
  
 box(width=6, leafletOutput("mapcoronacon"), status = "primary", title="Map with confirmed number of COVID-19 cases"),
-valueBoxOutput(width=6,"populationcontinent2018")
+valueBoxOutput(width=6,"populationcontinent2018"),
+valueBoxOutput(width=6,"datefirstcoronacasecon")
   ),
 
 fluidRow(
   column(width=12,
          
-         box(width=10, title="Cumulative COVID data",status = "primary", plotOutput("covidcasescumcon")),
+         box(width=10, title="Cumulative COVID-19 data",status = "primary", plotOutput("covidcasescumcon")),
          valueBoxOutput(width=2,"nocasescon"),
          valueBoxOutput(width=2,"nocasesPerPopcon"),
          valueBoxOutput(width=2,"nodeathsPercasescon")
@@ -116,10 +118,10 @@ tabItem(tabName = "about",
                                        "Fetzer, T., Witte, M., Hensel, L., Jachimowicz, J.M., Haushofer, J., Ivchenko, A., 
                                         Caria, C., Reutskaja, E., Roth, C., Fiorin, F., Gomez, M., Kraft-Todd, G., Goetz, F., & Yoeli, E.. 
                                         Global Behaviors and Perceptions in the COVID-19 Pandemic. https://doi.org/10.31234/osf.io/3kfmh
-                                        International Survey on Coronavirus, GlobalBehaviorsPerceptions_Dataset_Apr22_2020,", tags$a(href="https://osf.io/k5b6u/", "https://osf.io/k5b6u/"),",",tags$a(href="https://covid19-survey.org/results.html", "https://covid19-survey.org/results.html") 
+                                        International Survey on Coronavirus, GlobalBehaviorsPerceptions_Dataset_Apr22_2020,", tags$a(href="https://osf.io/g7fn9/", "https://osf.io/g7fn9/"),",",tags$a(href="https://covid19-survey.org/results.html", "https://covid19-survey.org/results.html") 
                                      )),
-        boxPlus(width=12, title="Data update", closable= FALSE, status="warning", solidHeader = FALSE, collapsible = TRUE, p("ECDC Covid-19 Data, last update: 11.5.2020",br(),"International Survey on Coronavirus, last update: 22.4.2020",br(), "Dashboard v1.1, last update 11.5.2020")),
-        boxPlus(width=12, title="Contact", closable= FALSE, status="warning", solidHeader = FALSE, collapsible = TRUE, p("Dashboard autor: Sabina Rako, E-mail: sabina.rako1[at]gmail.com", br(), "Dashboard R code available at", tags$a(href="https://github.com/SabinaRa/CoDaP", "GitHub page")))
+        boxPlus(width=12, title="Data update", closable= FALSE, status="warning", solidHeader = FALSE, collapsible = TRUE, p("ECDC Covid-19 Data, last update: 12.5.2020",br(),"International Survey on Coronavirus, last update: 22.4.2020",br(), "Dashboard v1.1, last update 12.5.2020")),
+        boxPlus(width=12, title="Contact", closable= FALSE, status="warning", solidHeader = FALSE, collapsible = TRUE, p("Dashboard created by Sabina Rako, E-mail: sabina.rako1[at]gmail.com", br(), "Dashboard R code available at", tags$a(href="https://github.com/SabinaRa/CoDaP", "GitHub page")))
         
         )
         )

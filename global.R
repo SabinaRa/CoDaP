@@ -21,7 +21,7 @@ library(treemap)
 
 options(digits.secs=2) 
 
-data <- read_excel("./data/COVID-19-geographic-disbtribution-worldwide-2020-05-11.xlsx")
+data <- read_excel("./data/COVID-19-geographic-disbtribution-worldwide-2020-05-12.xlsx")
 
 #data adjustment, preparation to implement join
 data$countriesAndTerritories <- stringr::str_replace_all(data$countriesAndTerritories, "[_]", " ")
