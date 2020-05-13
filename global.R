@@ -28,8 +28,9 @@ data$countriesAndTerritories <- stringr::str_replace_all(data$countriesAndTerrit
 data <- data %>% mutate(geoId =replace(geoId, geoId=="UK", "GB")) 
 data <- data %>% mutate(continentExp =replace(continentExp, continentExp=="America", "Americas")) 
 
-countries <- read.csv("./data/countries.csv", header = TRUE, encoding= "UTF-8", stringsAsFactors = FALSE)
-continents <- read.csv("./data/continents.csv", header = TRUE, encoding= "UTF-8", stringsAsFactors = FALSE)
+countries <- read_csv("./data/countries.csv")
+continents <- read_csv("./data/continents.csv")
+
 
 #statadata adjustment, preparation to implement join
 statadata <- read_dta("./data/GlobalBehaviorsPerceptions_Dataset_Apr22_2020.dta")
